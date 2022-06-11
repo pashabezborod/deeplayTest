@@ -51,7 +51,7 @@ public class Solution {
                 case 'W' -> config[1];
                 case 'T' -> config[2];
                 case 'P' -> config[3];
-                default -> throw new RuntimeException("Illegal tale type!");
+                default -> throw new IOException("Illegal tale type!");
             };
             y = ++count / 4;
             x = count % 4;
