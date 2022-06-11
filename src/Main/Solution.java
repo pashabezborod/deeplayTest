@@ -10,7 +10,7 @@ public class Solution {
     /*
     Method returns minimal cost of the creature's movement from the top-left corner to the down-right one.
      */
-    private static int getResult(String field, String creature) throws IOException, URISyntaxException {
+    public static int getResult(String field, String creature) throws IOException, URISyntaxException {
         int[][] matrix = makeMatrix(field, creature);
         return findBestPath(matrix, 0, 0) - matrix[0][0];
 
