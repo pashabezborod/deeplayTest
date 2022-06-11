@@ -7,7 +7,7 @@ import java.net.URISyntaxException;
 import java.nio.file.Path;
 
 public class Solution {
-    /*
+    /**
     Method returns minimal cost of the creature's movement from the top-left corner to the down-right one.
      */
     public static int getResult(String field, String creature) throws IOException, URISyntaxException {
@@ -16,7 +16,7 @@ public class Solution {
 
     }
 
-    /*
+    /**
     Method makes a path to data.config depends on OS.
     */
     private static String createConfigPath() throws URISyntaxException, IOException {
@@ -37,7 +37,7 @@ public class Solution {
         return path;
     }
 
-    /*
+    /**
     Method creates matrix of a game field with every tile's move cost.
     Throws exceptions if .config contains incorrect data.
      */
@@ -59,7 +59,7 @@ public class Solution {
         return matrix;
     }
 
-    /*
+    /**
     Method reads data form .config file. Throws exceptions if file doesn't exist
     or contains incorrect data. Example for .config file:
 
@@ -81,7 +81,7 @@ public class Solution {
         }
     }
 
-    /*
+    /**
     Method recursively calculates and returns the shortest way to the last tile of the matrix.
      */
     private static int findBestPath(int[][] matrix, int x, int y) {
