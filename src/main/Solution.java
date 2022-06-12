@@ -1,16 +1,18 @@
-package Main;
+package main;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 import java.net.URISyntaxException;
 import java.nio.file.Path;
+import java.util.Arrays;
+import org.jetbrains.annotations.NotNull;
 
 public class Solution {
     /**
     Method returns minimal cost of the creature's movement from the top-left corner to the down-right one.
      */
-    public static int getResult(String field, String creature) throws IOException, URISyntaxException {
+    public static int getResult(@NotNull String field,@NotNull String creature) throws IOException, URISyntaxException {
         int[][] matrix = makeMatrix(field, creature);
         return findBestPath(matrix, 0, 0) - matrix[0][0];
 
@@ -27,8 +29,8 @@ public class Solution {
                         .getLocation()
                         .toURI()
                         .getPath())
-                .getParent()
-                .toString();
+                        .getParent()
+                        .toString();
         path += switch (os) {
             case "windows" -> "\\data.config";
             case "mac", "linux" -> "/data.config";
@@ -75,7 +77,7 @@ public class Solution {
                 temp = reader.readLine().split(" ");
                 if (temp[0].equalsIgnoreCase(creature)) break;
             }
-            assert temp != null && temp.length == 5 : "config error!";
+            if (temp == null || temp.length != 5) throw new IOException("config file error!");
             for (int i = 0; i < 4; i++) result[i] = Integer.parseInt(temp[i + 1]);
             return result;
         }
