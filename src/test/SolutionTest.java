@@ -8,7 +8,6 @@ import java.net.URISyntaxException;
 import java.util.Random;
 
 public class SolutionTest {
-
     @Test
     public void getResult() {
         int expected = 10;
