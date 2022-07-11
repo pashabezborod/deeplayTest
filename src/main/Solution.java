@@ -8,6 +8,18 @@ import java.net.URISyntaxException;
 import java.nio.file.Path;
 
 public class Solution {
+    public static void main(String[] args) {
+        if (args.length != 2) {
+            System.out.println("Need two arguments:\n1.Game Filed\n2. Creature type (Human, Swamper or Woodman");
+            System.exit(1);
+        }
+        try {
+            System.out.println(getResult(args[0], args[1]));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
     /**
      * Method returns minimal cost of the creature's movement from the top-left corner to the down-right one.
      */
