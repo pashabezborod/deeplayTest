@@ -6,35 +6,32 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.net.URISyntaxException;
 import java.nio.file.Path;
-import org.jetbrains.annotations.NotNull;
 
 public class Solution {
     /**
-    Method returns minimal cost of the creature's movement from the top-left corner to the down-right one.
+     * Method returns minimal cost of the creature's movement from the top-left corner to the down-right one.
      */
-    public static int getResult(@NotNull String field,@NotNull String creature) throws IOException, URISyntaxException {
+    public static int getResult(String field, String creature) throws IOException, URISyntaxException {
         int[][] matrix = makeMatrix(field, creature);
         return findBestPath(matrix, 0, 0) - matrix[0][0];
     }
 
     /**
-    Method makes a path to data.config depends on OS.
-    */
-    private static String createConfigPath() throws URISyntaxException {
-        String path = Path.of(Solution.class
+     * Method makes a path to data.config depends on OS.
+     */
+    private static String createPath() throws URISyntaxException {
+        return Path.of(Solution.class
                         .getProtectionDomain()
                         .getCodeSource()
                         .getLocation()
                         .toURI()
                         .getPath())
-                        .getParent()
-                        .toString();
-        return path + File.separator + "data.config";
+                .toString();
     }
 
     /**
-    Method creates matrix of a game field with every tile's move cost.
-    Throws exceptions if .config contains incorrect data.
+     * Method creates matrix of a game field with every tile's move cost.
+     * Throws exceptions if .config contains incorrect data.
      */
     private static int[][] makeMatrix(String field, String creature) throws IOException, URISyntaxException {
         readConfig(creature);
@@ -55,15 +52,16 @@ public class Solution {
     }
 
     /**
-    Method reads data form .config file. Throws exceptions if file doesn't exist
-    or contains incorrect data. Example for .config file:
-
-    HUMAN 5 2 3 1
-    SWAMPER 2 2 5 2
-    WOODMAN 3 3 2 2
+     * Method reads data form .config file. Throws exceptions if file doesn't exist
+     * or contains incorrect data. Example for .config file:
+     *
+     * HUMAN 5 2 3 1
+     * SWAMPER 2 2 5 2
+     * WOODMAN 3 3 2 2
      */
     private static void readConfig(String creature) throws IOException, URISyntaxException {
-        try (BufferedReader reader = new BufferedReader(new FileReader(createConfigPath()))) {
+        try (BufferedReader reader = new BufferedReader(new FileReader(
+                createPath() + File.separator + "data" + File.separator + "data.config"))) {
             String[] temp = null;
             while (reader.ready()) {
                 temp = reader.readLine().split(" ");
@@ -75,7 +73,7 @@ public class Solution {
     }
 
     /**
-    Method recursively calculates and returns the shortest way to the last tile of the matrix.
+     * Method recursively calculates and returns the shortest way to the last tile of the matrix.
      */
     private static int findBestPath(int[][] matrix, int x, int y) {
         if (x == 3 && y == 3) return matrix[y][x];
@@ -86,7 +84,11 @@ public class Solution {
         else return Math.max(goDown, goRight);
     }
 
-    enum CreatureSpeed {
+    /**
+     * Enum with all types of tiles
+     */
+
+    private enum CreatureSpeed {
         SWAMP,
         WATER,
         THICKET,
