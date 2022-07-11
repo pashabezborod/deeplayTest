@@ -6,6 +6,7 @@ Game field has 4X4 size and contains upper case letters - first letters of game 
 `W` - *Water*  
 `T` - *Thicket*  
 `P` - *Plain*  
+
 There are 3 types of creatures in this game:  
 `Human`  
 `Woodman`  
