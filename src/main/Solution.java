@@ -8,14 +8,23 @@ import java.net.URISyntaxException;
 import java.nio.file.Path;
 
 public class Solution {
-    public static void main(String[] args) {
-        if (args.length != 2) {
-            System.out.println("Need two arguments:\n1. Game Filed\n2. Creature type (Human, Swamper or Woodman");
-            System.exit(1);
-        }
+    public static void main(String... args) {
+        if (args.length != 2)
+            throw new IllegalArgumentException("""
+                    \nNeed two arguments:
+                    1. Game filed
+                    2. Creature type (Human, Swamper or Woodman)""");
+        if (args[0].length() != 16)
+            throw new IllegalArgumentException("\nField must be 4X4 tales (16 letters)");
+
         try {
-            System.out.println(getResult(args[0], args[1]));
-        } catch (Exception e) {
+            System.out.println("Calculating results for " + args[1]);
+            System.out.println("Shortest way costs " + getResult(args[0], args[1]));
+        } catch (IOException e) {
+            System.err.println("Data reading error. Did you mount data.config?");
+            e.printStackTrace();
+        } catch (URISyntaxException e) {
+            System.err.println("Path to data.config casting error.");
             e.printStackTrace();
         }
     }
