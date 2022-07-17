@@ -22,5 +22,5 @@ jobs:
         with:
           context: .
           push: true
-          tags: pashabezborod/deeplaytest
-          labels: latest
+          tags: latest
+          labels: pashabezborod/deeplaytest
