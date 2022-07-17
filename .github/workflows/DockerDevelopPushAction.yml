@@ -1,9 +1,9 @@
-name: TestBranchPush
+name: DevelopBranchPush
 
 on:
   push:
     branches:
-      - 'TestingWorkflows'
+      - 'develop'
 
 jobs:
   docker:
@@ -26,4 +26,4 @@ jobs:
         uses: docker/build-push-action@v3
         with:
           push: true
-          tags: pashabezborod/deeplaytest:test
+          tags: pashabezborod/deeplaytest:develop
