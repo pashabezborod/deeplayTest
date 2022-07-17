@@ -38,7 +38,7 @@ public class Solution {
     }
 
     /**
-     * Method makes a path to data.config depends on OS.
+     * Method makes a path to data.config
      */
     private static String createPath() throws URISyntaxException {
         return Path.of(Solution.class
@@ -75,7 +75,7 @@ public class Solution {
     /**
      * Method reads data form .config file. Throws exceptions if file doesn't exist
      * or contains incorrect data. Example for .config file:
-     *
+     * <p>
      * HUMAN 5 2 3 1
      * SWAMPER 2 2 5 2
      * WOODMAN 3 3 2 2
@@ -106,7 +106,7 @@ public class Solution {
     }
 
     /**
-     * Enum with all types of tiles
+     * A special class to keep data from .config
      */
 
     private enum CreatureSpeed {
