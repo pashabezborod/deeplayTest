@@ -12,7 +12,7 @@ public class Solution {
         if (args.length != 2)
             throw new IllegalArgumentException("""
                     \nNeed two arguments:
-                    1. Game filed
+                    1. Game field
                     2. Creature type (Human, Swamper or Woodman)""");
         if (args[0].length() != 16)
             throw new IllegalArgumentException("\nField must be 4X4 tales (16 letters)");
@@ -41,7 +41,13 @@ public class Solution {
      * Method makes a path to data.config
      */
     private static String createPath() throws URISyntaxException {
-        return Path.of(Solution.class.getProtectionDomain().getCodeSource().getLocation().toURI().getPath()) + File.separator + "data" + File.separator + "data.config";
+        Path path = Path.of(Solution.class.getProtectionDomain()
+                .getCodeSource()
+                .getLocation()
+                .toURI()
+                .getPath());
+        if (path.toString().endsWith(".jar")) path = path.getParent();
+        return path + File.separator + "data" + File.separator + "data.config";
     }
 
     /**
