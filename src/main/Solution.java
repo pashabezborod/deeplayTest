@@ -109,19 +109,21 @@ public class Solution {
      * A special class to keep data from .config
      */
 
-    private enum CreatureSpeed {
-        SWAMP,
-        WATER,
-        THICKET,
-        PLAIN;
-        private int value;
-
-        public int getValue() {
-            return value;
-        }
-
-        public void setValue(int value) {
-            this.value = value;
+    private record CreatureSpeedData(int swamp, int water, int thicket, int plain) {
+        int getSpeed(char fieldName) throws IllegalArgumentException {
+            return switch (fieldName) {
+                case 'S' -> swamp;
+                case 'W' -> water;
+                case 'T' -> thicket;
+                case 'P' -> plain;
+                default -> throw new IllegalArgumentException("""
+                        \nWrong tale type!
+                        Valid tiles:
+                        "S" - Swamp
+                        "W" - Water
+                        "T" - Thicket
+                        "P" - Plain""");
+            };
         }
     }
 }
