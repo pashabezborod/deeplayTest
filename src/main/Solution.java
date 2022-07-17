@@ -72,11 +72,15 @@ public class Solution {
         try (BufferedReader reader = new BufferedReader(new FileReader(createPath()))) {
             String[] data = null;
             while (reader.ready()) {
-                temp = reader.readLine().split(" ");
-                if (temp[0].equalsIgnoreCase(creature)) break;
+                String[] temp = reader.readLine().split(" ");
+                if (temp[0].equalsIgnoreCase(creature)) {
+                    data = temp;
+                    break;
+                }
             }
-            if (temp == null || temp.length != 5) throw new IOException("config file error!");
-            for (int i = 0; i < 4; i++) CreatureSpeed.values()[i].setValue(Integer.parseInt(temp[i + 1]));
+            if (data == null) throw new IllegalArgumentException("\nNo such a creature in the game.");
+            if (data.length != 5) throw new IllegalArgumentException("\nIncorrect data. Check data.config");
+            return new CreatureSpeedData(Integer.parseInt(data[1]), Integer.parseInt(data[2]), Integer.parseInt(data[3]), Integer.parseInt(data[4]));
         }
     }
 
