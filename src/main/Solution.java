@@ -41,13 +41,7 @@ public class Solution {
      * Method makes a path to data.config
      */
     private static String createPath() throws URISyntaxException {
-        return Path.of(Solution.class
-                        .getProtectionDomain()
-                        .getCodeSource()
-                        .getLocation()
-                        .toURI()
-                        .getPath())
-                .toString();
+        return Path.of(Solution.class.getProtectionDomain().getCodeSource().getLocation().toURI().getPath()) + File.separator + "data" + File.separator + "data.config";
     }
 
     /**
@@ -55,17 +49,11 @@ public class Solution {
      * Throws exceptions if .config contains incorrect data.
      */
     private static int[][] makeMatrix(String field, String creature) throws IOException, URISyntaxException {
-        readConfig(creature);
+        CreatureSpeedData speedData = readConfig(creature);
         int[][] matrix = new int[4][4];
         int x = 0, y = 0, count = 0;
         for (char temp : field.toCharArray()) {
-            matrix[y][x] = switch (temp) {
-                case 'S' -> CreatureSpeed.SWAMP.getValue();
-                case 'W' -> CreatureSpeed.WATER.getValue();
-                case 'T' -> CreatureSpeed.THICKET.getValue();
-                case 'P' -> CreatureSpeed.PLAIN.getValue();
-                default -> throw new IOException("Illegal tale type!");
-            };
+            matrix[y][x] = speedData.getSpeed(temp);
             y = ++count / 4;
             x = count % 4;
         }
@@ -80,10 +68,9 @@ public class Solution {
      * SWAMPER 2 2 5 2
      * WOODMAN 3 3 2 2
      */
-    private static void readConfig(String creature) throws IOException, URISyntaxException {
-        try (BufferedReader reader = new BufferedReader(new FileReader(
-                createPath() + File.separator + "data" + File.separator + "data.config"))) {
-            String[] temp = null;
+    private static CreatureSpeedData readConfig(String creature) throws IOException, URISyntaxException {
+        try (BufferedReader reader = new BufferedReader(new FileReader(createPath()))) {
+            String[] data = null;
             while (reader.ready()) {
                 temp = reader.readLine().split(" ");
                 if (temp[0].equalsIgnoreCase(creature)) break;
