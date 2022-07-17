@@ -51,4 +51,9 @@ public class SolutionTest {
             }
         }
     }
+
+    @Test
+    public void testMain() {
+        Solution.main("STWSWTPPTPTTPWPP", "Human");
+    }
 }
