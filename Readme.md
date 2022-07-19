@@ -26,18 +26,37 @@ Creatures order doesn't matter, but tiles order does. Correct order is
 
 Example for the data.config file:  
 
-_HUMAN 5 2 3 1  
-SWAMPER 2 2 5 2  
-WOODMAN 3 3 2 2_
+```
+HUMAN 5 2 3 1
+SWAMPER 2 2 5 2
+WOODMAN 3 3 2 2
+```
 
 Method prints to the console the cost of the shortest path.  
 For the example above it's 10.
 ### Docker
-Repository's path on DockerHub: ***pashabezborod/deeplaytest:latest***  
-Mount data.config file to **/app/data** and add two arguments for **main** method.
+This app made for run with docker only.  
+Repository's path on DockerHub: ***pashabezborod/deeplaytest***  
+Mount data.config file to **/app/data/data.config** and add two arguments for **main** method.
 
 To run it with docker you can use following command:  
-`docker run -v `***path_to_data.config***`:/app/data/data.config pashabezborod/deeplaytest` ***arguments***  
+```
+docker run -v path_to_data.config:/app/data/data.config pashabezborod/deeplaytest gameField CreatureName
+```
+
+or just  
+```
+docker run pashabezborod/deeplaytest gameField CreatureName  
+```
+to run it with default configs.
 
 Example for docker command:  
-`docker run -v /home/user/data.config:/app/data/data.config pashabezborod/deeplaytest STWSWTPPTPTTPWPP Human`
+```
+docker run -v /home/user/data.config:/app/data/data.config pashabezborod/deeplaytest STWSWTPPTPTTPWPP Human
+```
+### Task in pictures
+![Picture1](https://github.com/pashabezborod/deeplayTest/raw/Refactor/lib/Picture1.png)  
+
+![Picture2](https://github.com/pashabezborod/deeplayTest/raw/Refactor/lib/Picture2.png)
+
+![Picture3](https://github.com/pashabezborod/deeplayTest/raw/Refactor/lib/Picture3.png)  

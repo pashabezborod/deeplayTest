@@ -3,25 +3,27 @@ package test;
 import main.Solution;
 import org.junit.Assert;
 import org.junit.Test;
-import java.io.IOException;
-import java.net.URISyntaxException;
+
+import java.io.File;
+import java.nio.file.Path;
 import java.util.Random;
 
 public class SolutionTest {
+    String path = Path.of(Solution.class.getResource("").getPath())
+                          .getParent()
+                          .getParent()
+                          .getParent()
+                          .getParent()
+                          .toString() + File.separator + "data" + File.separator + "data.config";
     @Test
-    public void getResult() {
+    public void testExpectedResult() throws Exception {
         int expected = 10;
-        int actual;
-        try {
-            actual = Solution.getResult("STWSWTPPTPTTPWPP", "Human");
-        } catch (IOException | URISyntaxException e) {
-            throw new RuntimeException(e);
-        }
+        int actual = Solution.getResult("STWSWTPPTPTTPWPP", "Human", path);
         Assert.assertEquals(expected, actual);
     }
 
     @Test
-    public void getRandomResults() {
+    public void testRandomResults() throws Exception {
         enum Creature {
             HUMAN("Human"), SWAMPER("Swamper"), WOODMAN("Woodman");
             public final String value;
@@ -44,11 +46,7 @@ public class SolutionTest {
                     default -> throw new RuntimeException("Random failed lol");
                 });
             }
-            try {
-                Solution.getResult(builder.toString(), Creature.values()[random.nextInt(2)].value);
-            } catch (IOException | URISyntaxException e) {
-                throw new RuntimeException(e);
-            }
+            Solution.getResult(builder.toString(), Creature.values()[random.nextInt(2)].value, path);
         }
     }
 }
