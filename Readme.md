@@ -55,8 +55,8 @@ Example for docker command:
 docker run -v /home/user/data.config:/app/data/data.config pashabezborod/deeplaytest STWSWTPPTPTTPWPP Human
 ```
 ### Task in pictures
-![Picture1](https://github.com/pashabezborod/deeplayTest/raw/Refactor/lib/Picture1.png)  
+![Picture1](https://github.com/pashabezborod/deeplayTest/raw/master/lib/Picture1.png)  
 
-![Picture2](https://github.com/pashabezborod/deeplayTest/raw/Refactor/lib/Picture2.png)
+![Picture2](https://github.com/pashabezborod/deeplayTest/raw/master/lib/Picture2.png)
 
-![Picture3](https://github.com/pashabezborod/deeplayTest/raw/Refactor/lib/Picture3.png)  
+![Picture3](https://github.com/pashabezborod/deeplayTest/raw/master/lib/Picture3.png)  
