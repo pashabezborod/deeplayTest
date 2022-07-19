@@ -25,14 +25,14 @@ jobs:
           password: ${{ secrets.DOCKER_PASS }}
 
       - name: Build and push Master
-        if: ${{ github.ref_name == 'master' }}
+        if: github.ref_name == 'master'
         uses: docker/build-push-action@v3
         with:
           push: true
           tags: pashabezborod/deeplaytest:latest
 
       - name: Build and push Develop
-        if: ${{ github.ref_name == 'develop' }}
+        if: github.ref_name == 'develop'
         uses: docker/build-push-action@v3
         with:
           push: true
