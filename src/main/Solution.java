@@ -26,30 +26,22 @@ public class Solution {
     /**
      * Method returns minimal cost of the creature's movement from the top-left corner to the down-right one.
      */
-    public static int getResult(String field, String creature) throws IOException, URISyntaxException {
-        int[][] matrix = makeMatrix(field, creature);
+    public static int getResult(String field, String creature) throws IOException {
+        String path = "/app/data/data.config";
+        int[][] matrix = makeMatrix(field, readConfig(creature, path));
         return findBestPath(matrix, 0, 0) - matrix[0][0];
     }
 
-    /**
-     * Method makes a path to data.config
-     */
-    private static String createPath() throws URISyntaxException {
-        Path path = Path.of(Solution.class.getProtectionDomain()
-                .getCodeSource()
-                .getLocation()
-                .toURI()
-                .getPath());
-        if (path.toString().endsWith(".jar")) path = path.getParent();
-        return path + File.separator + "data" + File.separator + "data.config";
+    public static int getResult(String field, String creature, String path) throws IOException {
+        int[][] matrix = makeMatrix(field, readConfig(creature, path));
+        return findBestPath(matrix, 0, 0) - matrix[0][0];
     }
 
     /**
      * Method creates matrix of a game field with every tile's move cost.
      * Throws exceptions if .config contains incorrect data.
      */
-    private static int[][] makeMatrix(String field, String creature) throws IOException, URISyntaxException {
-        CreatureSpeedData speedData = readConfig(creature);
+    private static int[][] makeMatrix(String field, CreatureSpeedData speedData) {
         int[][] matrix = new int[4][4];
         int x = 0, y = 0, count = 0;
         for (char temp : field.toCharArray()) {
@@ -67,8 +59,8 @@ public class Solution {
      * SWAMPER 2 2 5 2
      * WOODMAN 3 3 2 2
      */
-    private static CreatureSpeedData readConfig(String creature) throws IOException, URISyntaxException {
-        try (BufferedReader reader = new BufferedReader(new FileReader(createPath()))) {
+    private static CreatureSpeedData readConfig(String creature, String path) throws IOException {
+        try (BufferedReader reader = new BufferedReader(new FileReader(path))) {
             String[] data = null;
             while (reader.ready()) {
                 String[] temp = reader.readLine().split(" ");
@@ -77,7 +69,8 @@ public class Solution {
                     break;
                 }
             }
-            if (data == null) throw new IllegalArgumentException("\nNo such a creature in the game.");
+            if (data == null) throw new IllegalArgumentException("\nCreature " + creature + " has not been found" +
+                                                                 "in the configuration file.");
             if (data.length != 5) throw new IllegalArgumentException("\nIncorrect data. Check data.config");
             return new CreatureSpeedData(Integer.parseInt(data[1]), Integer.parseInt(data[2]), Integer.parseInt(data[3]), Integer.parseInt(data[4]));
         }
