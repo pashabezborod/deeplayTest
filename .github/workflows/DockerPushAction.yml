@@ -1,3 +1,4 @@
+name: DockerPush
 on:
   push:
     branches:
