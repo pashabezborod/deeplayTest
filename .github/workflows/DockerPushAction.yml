@@ -1,4 +1,11 @@
-on: [push]
+on:
+  push:
+    branches:
+      - 'develop'
+      - 'main'
+    tags-ignore:
+      - 'Action_check'
+
 permissions: read-all
 jobs:
   docker:
