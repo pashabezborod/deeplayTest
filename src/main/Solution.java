@@ -5,7 +5,7 @@ import java.io.FileReader;
 import java.io.IOException;
 
 public class Solution {
-    public static void main(String... args) {
+    public static void main(String...args) {
         if (args.length != 2)
             throw new IllegalArgumentException("""
                     \nNeed two arguments:
