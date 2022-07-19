@@ -1,6 +1,5 @@
 on: [push]
 permissions: read-all
-
 jobs:
   docker:
     runs-on: ubuntu-latest
