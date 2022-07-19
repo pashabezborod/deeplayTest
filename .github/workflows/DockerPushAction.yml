@@ -23,9 +23,9 @@ jobs:
           push: true
           tags: pashabezborod/deeplaytest:latest
 
-        - name: Build and push Develop
-          if: ${{ github.ref_name == 'develop' }}
-          uses: docker/build-push-action@v3
-          with:
-            push: true
-            tags: pashabezborod/deeplaytest:develop
+      - name: Build and push Develop
+        if: ${{ github.ref_name == 'develop' }}
+        uses: docker/build-push-action@v3
+        with:
+          push: true
+          tags: pashabezborod/deeplaytest:develop
