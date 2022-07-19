@@ -9,7 +9,7 @@ public class Solution {
         if (args.length != 2)
             throw new IllegalArgumentException("""
                     \nNeed two arguments:
-                    1. Game field
+                    1. Game field (16-letters string)
                     2. Creature type (Human, Swamper or Woodman)""");
         if (args[0].length() != 16)
             throw new IllegalArgumentException("\nField must be 4X4 tales (16 letters)");
@@ -61,9 +61,8 @@ public class Solution {
     }
 
     /**
-     * Method reads data form .config file. Throws exceptions if file doesn't exist
-     * or contains incorrect data. Example for .config file:
-     * <p>
+     * Method reads data form .config file. Throws IOException if file doesn't exist
+     * or IOException if it contains incorrect data. Example for .config file:
      * HUMAN 5 2 3 1
      * SWAMPER 2 2 5 2
      * WOODMAN 3 3 2 2
