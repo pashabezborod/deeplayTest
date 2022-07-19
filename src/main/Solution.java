@@ -1,11 +1,8 @@
 package main;
 
 import java.io.BufferedReader;
-import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
-import java.net.URISyntaxException;
-import java.nio.file.Path;
 
 public class Solution {
     public static void main(String... args) {
@@ -22,9 +19,6 @@ public class Solution {
             System.out.println("Shortest way costs " + getResult(args[0], args[1]));
         } catch (IOException e) {
             System.err.println("Data reading error. Did you mount data.config?");
-            e.printStackTrace();
-        } catch (URISyntaxException e) {
-            System.err.println("Path to data.config casting error.");
             e.printStackTrace();
         }
     }
