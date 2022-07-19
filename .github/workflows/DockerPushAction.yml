@@ -2,8 +2,8 @@ name: DockerPush
 on:
   push:
     branches:
-      - 'develop'
-      - 'main'
+      - 'Develop'
+      - 'master'
     tags-ignore:
       - 'Action_check'
 
