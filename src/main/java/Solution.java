@@ -77,7 +77,7 @@ public class Solution {
                     break;
                 }
             }
-            if (data == null) throw new IllegalArgumentException("\nCreature " + creature + " has not been found" +
+            if (data == null) throw new IllegalArgumentException("\nCreature " + creature + " has not been found " +
                                                                  "in the configuration file.");
             if (data.length != 5) throw new IllegalArgumentException("\nIncorrect data. Check data.config");
             return new CreatureSpeedData(Integer.parseInt(data[1]), Integer.parseInt(data[2]), Integer.parseInt(data[3]), Integer.parseInt(data[4]));
