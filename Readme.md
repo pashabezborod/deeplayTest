@@ -1,5 +1,7 @@
 # DeeplayTest
 This app calculates the shortest way from the top-left corner of the game field to te down-right one.  
+
+![Picture3](/lib/Picture3.png)
 ### Usage information
 Game field has 4X4 size and contains upper case letters - first letters of game tiles:  
 `S` - *Swamp*  
@@ -48,15 +50,10 @@ or just
 ```
 docker run pashabezborod/deeplaytest gameField CreatureName  
 ```
-to run it with default configs.
+to run it with default configs you can find above.
 
 Example for docker command:  
 ```
 docker run -v /home/user/data.config:/app/data/data.config pashabezborod/deeplaytest STWSWTPPTPTTPWPP Human
 ```
 ### Task in pictures
-![Picture1](https://github.com/pashabezborod/deeplayTest/raw/master/lib/Picture1.png)  
-
-![Picture2](https://github.com/pashabezborod/deeplayTest/raw/master/lib/Picture2.png)
-
-![Picture3](https://github.com/pashabezborod/deeplayTest/raw/master/lib/Picture3.png)  

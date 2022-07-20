@@ -3,7 +3,6 @@ package test;
 import main.Solution;
 import org.junit.Assert;
 import org.junit.Test;
-
 import java.io.File;
 import java.nio.file.Path;
 import java.util.Random;
@@ -24,14 +23,7 @@ public class SolutionTest {
 
     @Test
     public void testRandomResults() throws Exception {
-        enum Creature {
-            HUMAN("Human"), SWAMPER("Swamper"), WOODMAN("Woodman");
-            public final String value;
-
-            Creature(String value) {
-                this.value = value;
-            }
-        }
+        String[] creatures = {"Human", "Swamper", "Woodman"};
 
         for (int j = 0; j < 100000; j++) {
             StringBuilder builder = new StringBuilder();
@@ -46,7 +38,7 @@ public class SolutionTest {
                     default -> throw new RuntimeException("Random failed lol");
                 });
             }
-            Solution.getResult(builder.toString(), Creature.values()[random.nextInt(2)].value, path);
+            Solution.getResult(builder.toString(), creatures[random.nextInt(2)], path);
         }
     }
 }

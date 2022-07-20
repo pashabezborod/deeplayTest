@@ -1,25 +1,31 @@
 package main;
 
-import java.io.BufferedReader;
-import java.io.FileReader;
-import java.io.IOException;
+import java.io.*;
 
 public class Solution {
-    public static void main(String...args) {
-        if (args.length != 2)
-            throw new IllegalArgumentException("""
+    public static void main(String... args) {
+        if (args.length != 2) {
+            System.err.println("""
                     \nNeed two arguments:
                     1. Game field (16-letters string)
                     2. Creature type (Human, Swamper or Woodman)""");
-        if (args[0].length() != 16)
-            throw new IllegalArgumentException("\nField must be 4X4 tales (16 letters)");
+            System.exit(1);
+        }
+        if (args[0].length() != 16) {
+            System.err.println("\nField must be 4X4 tales (16 letters)");
+            System.exit(1);
+        }
+        String field = args[0], creature = args[1];
 
         try {
-            System.out.println("Calculating results for " + args[1]);
-            System.out.println("Shortest way costs " + getResult(args[0], args[1]));
+            System.out.println("Calculating results for " + creature);
+            System.out.println("Shortest way costs " + getResult(field, creature));
         } catch (IOException e) {
             System.err.println("Data reading error. Did you mount data.config?");
-            e.printStackTrace();
+            System.exit(1);
+        } catch (RuntimeException e) {
+            System.err.println(e.getMessage());
+            System.exit(1);
         }
     }
 
