@@ -1,62 +1,57 @@
 package main;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileReader;
-import java.io.IOException;
-import java.net.URISyntaxException;
-import java.nio.file.Path;
+import java.io.*;
 
 public class Solution {
-    public static void main(String[] args) {
+    public static void main(String... args) {
         if (args.length != 2) {
-            System.out.println("Need two arguments:\n1. Game Filed\n2. Creature type (Human, Swamper or Woodman");
+            System.err.println("""
+                    \nNeed two arguments:
+                    1. Game field (16-letters string)
+                    2. Creature type (Human, Swamper or Woodman)""");
             System.exit(1);
         }
+        if (args[0].length() != 16) {
+            System.err.println("\nField must be 4X4 tales (16 letters)");
+            System.exit(1);
+        }
+        String field = args[0], creature = args[1];
+
         try {
-            System.out.println(getResult(args[0], args[1]));
-        } catch (Exception e) {
-            e.printStackTrace();
+            System.out.println("Calculating results for " + creature);
+            System.out.println("Shortest way costs " + getResult(field, creature));
+        } catch (IOException e) {
+            System.err.println("Data reading error. Did you mount data.config?");
+            System.exit(1);
+        } catch (RuntimeException e) {
+            System.err.println(e.getMessage());
+            System.exit(1);
         }
     }
 
     /**
      * Method returns minimal cost of the creature's movement from the top-left corner to the down-right one.
      */
-    public static int getResult(String field, String creature) throws IOException, URISyntaxException {
-        int[][] matrix = makeMatrix(field, creature);
+    public static int getResult(String field, String creature) throws IOException {
+        String path = "/app/data/data.config";
+        int[][] matrix = makeMatrix(field, readConfig(creature, path));
         return findBestPath(matrix, 0, 0) - matrix[0][0];
     }
 
-    /**
-     * Method makes a path to data.config depends on OS.
-     */
-    private static String createPath() throws URISyntaxException {
-        return Path.of(Solution.class
-                        .getProtectionDomain()
-                        .getCodeSource()
-                        .getLocation()
-                        .toURI()
-                        .getPath())
-                .toString();
+    public static int getResult(String field, String creature, String path) throws IOException {
+        int[][] matrix = makeMatrix(field, readConfig(creature, path));
+        return findBestPath(matrix, 0, 0) - matrix[0][0];
     }
 
     /**
      * Method creates matrix of a game field with every tile's move cost.
      * Throws exceptions if .config contains incorrect data.
      */
-    private static int[][] makeMatrix(String field, String creature) throws IOException, URISyntaxException {
-        readConfig(creature);
+    private static int[][] makeMatrix(String field, CreatureSpeedData speedData) {
         int[][] matrix = new int[4][4];
         int x = 0, y = 0, count = 0;
         for (char temp : field.toCharArray()) {
-            matrix[y][x] = switch (temp) {
-                case 'S' -> CreatureSpeed.SWAMP.getValue();
-                case 'W' -> CreatureSpeed.WATER.getValue();
-                case 'T' -> CreatureSpeed.THICKET.getValue();
-                case 'P' -> CreatureSpeed.PLAIN.getValue();
-                default -> throw new IOException("Illegal tale type!");
-            };
+            matrix[y][x] = speedData.getSpeed(temp);
             y = ++count / 4;
             x = count % 4;
         }
@@ -64,23 +59,26 @@ public class Solution {
     }
 
     /**
-     * Method reads data form .config file. Throws exceptions if file doesn't exist
-     * or contains incorrect data. Example for .config file:
-     *
+     * Method reads data form .config file. Throws IOException if file doesn't exist
+     * or IOException if it contains incorrect data. Example for .config file:
      * HUMAN 5 2 3 1
      * SWAMPER 2 2 5 2
      * WOODMAN 3 3 2 2
      */
-    private static void readConfig(String creature) throws IOException, URISyntaxException {
-        try (BufferedReader reader = new BufferedReader(new FileReader(
-                createPath() + File.separator + "data" + File.separator + "data.config"))) {
-            String[] temp = null;
+    private static CreatureSpeedData readConfig(String creature, String path) throws IOException {
+        try (BufferedReader reader = new BufferedReader(new FileReader(path))) {
+            String[] data = null;
             while (reader.ready()) {
-                temp = reader.readLine().split(" ");
-                if (temp[0].equalsIgnoreCase(creature)) break;
+                String[] temp = reader.readLine().split(" ");
+                if (temp[0].equalsIgnoreCase(creature)) {
+                    data = temp;
+                    break;
+                }
             }
-            if (temp == null || temp.length != 5) throw new IOException("config file error!");
-            for (int i = 0; i < 4; i++) CreatureSpeed.values()[i].setValue(Integer.parseInt(temp[i + 1]));
+            if (data == null) throw new IllegalArgumentException("\nCreature " + creature + " has not been found" +
+                                                                 "in the configuration file.");
+            if (data.length != 5) throw new IllegalArgumentException("\nIncorrect data. Check data.config");
+            return new CreatureSpeedData(Integer.parseInt(data[1]), Integer.parseInt(data[2]), Integer.parseInt(data[3]), Integer.parseInt(data[4]));
         }
     }
 
@@ -97,22 +95,24 @@ public class Solution {
     }
 
     /**
-     * Enum with all types of tiles
+     * A special class to keep data from .config
      */
 
-    private enum CreatureSpeed {
-        SWAMP,
-        WATER,
-        THICKET,
-        PLAIN;
-        private int value;
-
-        public int getValue() {
-            return value;
-        }
-
-        public void setValue(int value) {
-            this.value = value;
+    private record CreatureSpeedData(int swamp, int water, int thicket, int plain) {
+        int getSpeed(char fieldName) throws IllegalArgumentException {
+            return switch (fieldName) {
+                case 'S' -> swamp;
+                case 'W' -> water;
+                case 'T' -> thicket;
+                case 'P' -> plain;
+                default -> throw new IllegalArgumentException("""
+                        \nWrong tale type!
+                        Valid tiles:
+                        "S" - Swamp
+                        "W" - Water
+                        "T" - Thicket
+                        "P" - Plain""");
+            };
         }
     }
 }
