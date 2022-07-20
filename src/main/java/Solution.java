@@ -33,13 +33,15 @@ public class Solution {
      * Method returns minimal cost of the creature's movement from the top-left corner to the down-right one.
      */
     public static int getResult(String field, String creature) throws IOException {
-        String path = "/app/data/data.config";
-        int[][] matrix = makeMatrix(field, readConfig(creature, path));
+        int[][] matrix;
+        try (InputStream is = new FileInputStream("/app/data/data.config")) {
+            matrix = makeMatrix(field, readConfig(creature, is));
+        }
         return findBestPath(matrix, 0, 0) - matrix[0][0];
     }
 
-    public static int getResult(String field, String creature, String path) throws IOException {
-        int[][] matrix = makeMatrix(field, readConfig(creature, path));
+    public static int getResult(String field, String creature, InputStream is) throws IOException {
+        int[][] matrix = makeMatrix(field, readConfig(creature, is));
         return findBestPath(matrix, 0, 0) - matrix[0][0];
     }
 
@@ -65,8 +67,8 @@ public class Solution {
      * SWAMPER 2 2 5 2
      * WOODMAN 3 3 2 2
      */
-    private static CreatureSpeedData readConfig(String creature, String path) throws IOException {
-        try (BufferedReader reader = new BufferedReader(new FileReader(path))) {
+    private static CreatureSpeedData readConfig(String creature, InputStream is) throws IOException {
+        try (BufferedReader reader = new BufferedReader(new InputStreamReader(is))) {
             String[] data = null;
             while (reader.ready()) {
                 String[] temp = reader.readLine().split(" ");
