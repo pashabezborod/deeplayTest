@@ -56,4 +56,3 @@ Example for docker command:
 ```
 docker run -v /home/user/data.config:/app/data/data.config pashabezborod/deeplaytest STWSWTPPTPTTPWPP Human
 ```
-### Task in pictures
