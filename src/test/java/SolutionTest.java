@@ -1,23 +1,13 @@
-package test;
-
-import main.Solution;
 import org.junit.Assert;
 import org.junit.Test;
-import java.io.File;
-import java.nio.file.Path;
+import java.io.InputStream;
 import java.util.Random;
 
 public class SolutionTest {
-    String path = Path.of(Solution.class.getResource("").getPath())
-                          .getParent()
-                          .getParent()
-                          .getParent()
-                          .getParent()
-                          .toString() + File.separator + "data" + File.separator + "data.config";
     @Test
     public void testExpectedResult() throws Exception {
         int expected = 10;
-        int actual = Solution.getResult("STWSWTPPTPTTPWPP", "Human", path);
+        int actual = Solution.getResult("STWSWTPPTPTTPWPP", "Human", getInputStream());
         Assert.assertEquals(expected, actual);
     }
 
@@ -38,7 +28,12 @@ public class SolutionTest {
                     default -> throw new RuntimeException("Random failed lol");
                 });
             }
-            Solution.getResult(builder.toString(), creatures[random.nextInt(2)], path);
+            Solution.getResult(builder.toString(), creatures[random.nextInt(2)], getInputStream());
         }
     }
+
+    private InputStream getInputStream() {
+        return getClass().getClassLoader().getResourceAsStream("data.config");
+    }
+
 }
