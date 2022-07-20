@@ -32,8 +32,8 @@ jobs:
           tags: pashabezborod/deeplaytest:latest
 
       - name: Build and push Develop
-        if: github.ref_name == 'develop'
+        if: github.ref_name != 'master'
         uses: docker/build-push-action@v3
         with:
-          push: true
-          tags: pashabezborod/deeplaytest:develop
+          push: false
+          tags: pashabezborod/deeplaytest:check
