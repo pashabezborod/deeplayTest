@@ -2,3 +2,6 @@ target/
 deeplaytest.iml
 Dockerfile
 Readme.md
+lib/
+.github/
+.idea/

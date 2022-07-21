@@ -1,9 +1,6 @@
 name: DockerPush
 on:
   push:
-    branches:
-      - 'Develop'
-      - 'master'
     tags-ignore:
       - 'Action_check'
 
@@ -31,9 +28,16 @@ jobs:
           push: true
           tags: pashabezborod/deeplaytest:latest
 
-      - name: Build and push Develop
-        if: github.ref_name != 'master'
+      - name: Release Build and Push
+        if: github.ref_type == 'tag'
         uses: docker/build-push-action@v3
         with:
-          push: false
-          tags: pashabezborod/deeplaytest:check
+          push: true
+          tags: pashabezborod/deeplaytest:${{ github.ref_name }}
+
+        - name: Test Build
+          if: github.ref_name != 'master' && github.ref_type == 'branch'
+          uses: docker/build-push-action@v3
+          with:
+            push: false
+            tags: pashabezborod/deeplaytest:test
