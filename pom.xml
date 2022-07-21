@@ -6,7 +6,7 @@
 
     <groupId>pashabezborod</groupId>
     <artifactId>deeplayTest</artifactId>
-    <version>1.1</version>
+    <version>1.0</version>
 
     <properties>
         <maven.compiler.source>16</maven.compiler.source>
@@ -50,7 +50,7 @@
                 <configuration>
                     <archive>
                         <manifest>
-                            <mainClass>Solution</mainClass>
+                            <mainClass>Main</mainClass>
                         </manifest>
                     </archive>
                 </configuration>
