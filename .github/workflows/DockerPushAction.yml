@@ -1,10 +1,7 @@
 name: DockerPush
-on:
-  push:
-    tags-ignore:
-      - 'Action_check'
-
+on: [push]
 permissions: read-all
+
 jobs:
   docker:
     runs-on: ubuntu-latest
